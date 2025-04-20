@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cv SYSTEM "cv.dtd">
+<?xml-stylesheet type="text/xsl" href="cv.xslt"?>
+<cv>
+    <!-- EN-TÊTE -->
+	<entete>
+        <nom>Maachou</nom>
+        <prenom>Douaa</prenom>
+        <dateNaissance>17/04/2004</dateNaissance>
+		<adresse>cite chrif bidi bloc 02 n 69 ,Bourouba Alger</adresse>
+        <nationalite>Algerienne</nationalite>
+        <situationMaritale>Célibataire</situationMaritale>
+        <permis>B</permis>
+        <photo>images/photo_leo.jpg</photo>
+    </entete>
+<!-- OBJECTIF -->
+    <objectif>
+        Intégrer une entreprise innovante dans le domaine de la technologie ou de l’édition, où mes compétences en bureautique, rédaction technique et structuration documentaire seront valorisées.
+    </objectif>
+<!-- SITUATION ACTUELLE -->
+    <situationActuelle>
+		Étudiante en Master 1  de informatique  à l'université Mhammed bougara
+	</situationActuelle>
+<!-- PARCOURS -->
+    <parcours>
+        <!-- FORMATIONS -->
+        <formations>
+            <diplome
+                etablissement="Calisota University"
+                type="Diplôme"
+                de="2006"
+                a="2009">
+                Upper second class honours in the degree of Bachelor of Science in Ship Building.
+            </diplome>
+            <diplome
+                etablissement="Calisota College"
+                type="Diplôme"
+                de="2003"
+                a="2005">
+                Passed Foundation Year Pathway to 21st Century Ship Building degree.
+            </diplome>
+            <diplome
+                etablissement="Calisota College"
+                type="Enseignement supérieur"
+                de="2001"
+                a="2003">
+                A-level Maths : A
+                A-level Engineering : B
+                A-level Biology : D
+            </diplome>
+            <diplome
+                etablissement="Calisota High School for Ducks"
+                type="Lycée"
+                de="1999"
+                a="2000">
+                Maths : A
+                Engineering : B
+                Biology : D
+            </diplome>
+        </formations>
+
+<!-- STAGES -->
+        <stages>
+            <stage>
+                <intituleStage>Relecteur chez Eyrolles</intituleStage>
+                <date>été</date>
+                <annee>2005</annee>
+                <descriptionstage>Révision d'ouvrages d'informatique et utilisation de la suite OpenOffice.org et du logiciel de gestion de versions Subversion.</descriptionstage>
+            </stage>
+            <stage>
+                <intituleStage>Stagiaire à l'UTC</intituleStage>
+                <date>été</date>
+                <annee>2004</annee>
+                <descriptionstage>Structuration documentaire, utilisation de Scenari.</descriptionstage>
+            </stage>
+        </stages>
+<!-- EXPÉRIENCES PROFESSIONNELLES -->
+        <experiencesProfessionnelles>
+            <experience id="exp1"
+                etablissement="Square Enix"
+                poste="Kingdom Hearts"
+                de="2002-06"
+                a="2002-09">
+                <description>Le jeu combine des personnages et décors de Disney avec ceux de Final Fantasy.</description>
+                <achievement>Pouvoirs magiques.</achievement>
+                <achievement>Intelligence artificielle impressionnante.</achievement>
+                <achievement>Autre réussite intéressante.</achievement>
+                <achievement>Relecture systématique du CV.</achievement>
+                <achievement>Structure conservée même dans Word.</achievement>
+                <achievement>Donald Duck approuverait.</achievement>
+            </experience>
+
+            <experience id="exp2"
+                etablissement="Walt Disney Feature Animation"
+                poste="Qui veut la peau de Roger Rabbit"
+                de="1988-06"
+                a="1988-09">
+                <description>Film mélangeant prises de vues réelles et animation.</description>
+                <achievement>Duel de piano mémorable.</achievement>
+                <achievement>Travail d'équipe avec d'autres acteurs.</achievement>
+                <achievement>Créativité mise à l'épreuve.</achievement>
+            </experience>
+
+            <experience id="exp3"
+                etablissement="Disney"
+                poste="Don Donald"
+                de="1937-06"
+                a="1937-09">
+                <description>Donald Duck tente de séduire une canne mexicaine nommée Donna.</description>
+                <achievement>Première apparition de Donald en personnage principal.</achievement>
+                <achievement>Introduction d'un intérêt amoureux pour Donald.</achievement>
+            </experience>
+
+            <experience id="exp4"
+                etablissement="Disney"
+                poste="Orphan's Benefit"
+                de="1934-06"
+                a="1934-09">
+                <description>Court métrage mettant en scène Donald Duck avec Mickey Mouse.</description>
+                <achievement>Première collaboration avec Mickey.</achievement>
+                <achievement>Animation des personnalités par le mouvement.</achievement>
+            </experience>
+        </experiencesProfessionnelles>
+    </parcours>
+<!-- COMPÉTENCES -->
+	<competences>
+        <competence>
+            <titre>Très bonne maîtrise du français écrit</titre>
+        </competence>
+        <competence>
+            <titre>Outils bureautiques</titre>
+            <description>Suite OpenOffice.org, Adobe Photoshop, The Gimp, Adobe Illustrator, Inkscape</description>
+        </competence>
+    </competences>
+<!-- LANGUES -->
+    <langues>
+        <langue>
+            <intitule>Anglais</intitule>
+            <niveau>Bilingue</niveau>
+        </langue>
+        <langue>
+            <intitule>Chinois</intitule>
+            <niveau>Rudiments</niveau>
+        </langue>
+    </langues>
+<!-- LOISIRS -->
+    <loisirs>
+        <loisir>Surf</loisir>
+        <loisir>Cinéma</loisir>
+        <loisir>Roller</loisir>
+        <loisir>Lecture</loisir>
+    </loisirs>
+
+<!-- RÉFÉRENCES -->
+	<references>
+		<contact
+			email="maachoudouaa04@gmail.com"
+			telephone="0021 2122 0121"
+			web="http://leo.monsiteperso.fr">
+            <nom>Mickey Mouse</nom>
+            <relation>Référence professionnelle</relation>
+		</contact>
+	</references>
+</cv>

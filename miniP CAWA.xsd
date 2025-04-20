@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="cv">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="entete"/>
+        <xs:element minOccurs="0" ref="objectif"/>
+        <xs:element minOccurs="0" ref="situationActuelle"/>
+        <xs:element ref="parcours"/>
+        <xs:element minOccurs="0" ref="competences"/>
+        <xs:element minOccurs="0" ref="langues"/>
+        <xs:element minOccurs="0" ref="loisirs"/>
+        <xs:element minOccurs="0" ref="references"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- EN-TÊTE -->
+  <xs:element name="entete">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nom"/>
+        <xs:element ref="prenom"/>
+        <xs:element ref="dateNaissance"/>
+        <xs:element ref="adresse"/>
+        <xs:element ref="nationalite"/>
+        <xs:element minOccurs="0" ref="situationMaritale"/>
+        <xs:element minOccurs="0" ref="permis"/>
+        <xs:element minOccurs="0" ref="photo"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nom" type="xs:string"/>
+  <xs:element name="prenom" type="xs:string"/>
+  <xs:element name="dateNaissance" type="xs:string"/>
+  <xs:element name="adresse" type="xs:string"/>
+  <xs:element name="nationalite" type="xs:string"/>
+  <xs:element name="situationMaritale" type="xs:string"/>
+  <xs:element name="permis" type="xs:string"/>
+  <xs:element name="photo" type="xs:string"/>
+  <!-- Chemin ou URL -->
+  <!-- OBJECTIF -->
+  <xs:element name="objectif" type="xs:string"/>
+  <!-- SITUATION ACTUELLE -->
+  <xs:element name="situationActuelle" type="xs:string"/>
+  <!-- PARCOURS -->
+  <xs:element name="parcours">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="formations"/>
+        <xs:element minOccurs="0" ref="stages"/>
+        <xs:element minOccurs="0" ref="experiencesProfessionnelles"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!-- FORMATIONS -->
+  <xs:element name="formations">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="diplome"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="diplome">
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="attlist.diplome"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.diplome">
+    <xs:attribute name="type" use="required"/>
+    <xs:attribute name="etablissement" use="required"/>
+    <xs:attribute name="de"/>
+    <xs:attribute name="a"/>
+  </xs:attributeGroup>
+  <!-- STAGES -->
+  <xs:element name="stages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="stage"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="stage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="intituleStage"/>
+        <xs:element ref="date"/>
+        <xs:element ref="annee"/>
+        <xs:element ref="descriptionstage"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intituleStage" type="xs:string"/>
+  <xs:element name="date" type="xs:string"/>
+  <xs:element name="annee" type="xs:string"/>
+  <xs:element name="descriptionstage" type="xs:string"/>
+  <!-- EXPÉRIENCES PROFESSIONNELLES -->
+  <xs:element name="experiencesProfessionnelles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="experience"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="experience">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="description"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="achievement"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.experience"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.experience">
+    <xs:attribute name="id" type="xs:ID"/>
+    <xs:attribute name="poste" use="required"/>
+    <xs:attribute name="etablissement" use="required"/>
+    <xs:attribute name="de"/>
+    <xs:attribute name="a"/>
+  </xs:attributeGroup>
+  <xs:element name="achievement" type="xs:string"/>
+  <!-- COMPÉTENCES -->
+  <xs:element name="competences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="competence"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="competence">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="titre"/>
+        <xs:element minOccurs="0" ref="description"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="titre" type="xs:string"/>
+  <xs:element name="description" type="xs:string"/>
+  <!-- LANGUES -->
+  <xs:element name="langues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="langue"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="langue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="intitule"/>
+        <xs:element ref="niveau"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intitule" type="xs:string"/>
+  <xs:element name="niveau" type="xs:string"/>
+  <!-- LOISIRS -->
+  <xs:element name="loisirs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="loisir"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="loisir" type="xs:string"/>
+  <!-- RÉFÉRENCES -->
+  <xs:element name="references">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="contact"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="nom"/>
+        <xs:element ref="relation"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="attlist.contact"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attlist.contact">
+    <xs:attribute name="email"/>
+    <xs:attribute name="telephone"/>
+    <xs:attribute name="web"/>
+  </xs:attributeGroup>
+  <xs:element name="relation" type="xs:string"/>
+</xs:schema>
