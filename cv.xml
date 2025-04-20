@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE cv SYSTEM "cv.dtd">
 <?xml-stylesheet type="text/xsl" href="cv.xslt"?>
-<cv>
     <!-- EN-TÊTE -->
 	<entete>
         <nom>Maachou</nom>
@@ -161,4 +160,3 @@
             <relation>Référence professionnelle</relation>
 		</contact>
 	</references>
-</cv>
