@@ -76,11 +76,7 @@ def json_to_xml(json_data, root_element="cv"):
     return etree.tostring(root, pretty_print=True, encoding="UTF-8", xml_declaration=True)
 
 @app.route('/add_cv', methods=['POST'])
-def add_cv():
-    """
-    Endpoint to add a CV
-    Accepts JSON, converts to XML, validates against XSD, and stores in DB
-    """
+def add_cv_combined():
     try:
         # Load XSD schema
         xsd_path = os.path.join(os.path.dirname(__file__), 'cv.xsd')
@@ -93,27 +89,37 @@ def add_cv():
             return jsonify({"error": "No JSON data provided"}), 400
 
         # Convert JSON to XML
-        xml_data = json_to_xml(json_data)
+        new_cv_xml = json_to_xml(json_data)
 
-        # Validate XML
-        is_valid, error_message = validate_xml_with_xsd(xml_data, xsd_path)
+        # Validate new CV XML
+        is_valid, error_message = validate_xml_with_xsd(new_cv_xml, xsd_path)
         if not is_valid:
             return jsonify({
                 "error": "Invalid XML",
                 "details": error_message,
-                "xml": xml_data.decode('utf-8')
+                "xml": new_cv_xml.decode('utf-8')
             }), 400
 
-        # Store in database
-        xml_string = xml_data.decode("UTF-8")
-        new_cv = CV(xml_data=xml_string)
-        db.session.add(new_cv)
+        # Check if a combined XML already exists
+        existing_record = CV.query.first()
+        if existing_record:
+            # Parse the existing XML and append the new CV
+            root = etree.fromstring(existing_record.xml_data.encode('utf-8'))
+            new_cv_element = etree.fromstring(new_cv_xml)
+            root.append(new_cv_element)
+            combined_xml = etree.tostring(root, pretty_print=True, encoding="UTF-8", xml_declaration=True)
+            existing_record.xml_data = combined_xml.decode("utf-8")
+        else:
+            # No existing XML, create a new one
+            combined_xml = new_cv_xml
+            new_cv = CV(xml_data=combined_xml.decode("utf-8"))
+            db.session.add(new_cv)
+
         db.session.commit()
 
         return jsonify({
             "message": "CV added successfully",
-            "cv_id": new_cv.id,
-            "xml": xml_string
+            "xml": combined_xml.decode("utf-8")
         }), 201
 
     except Exception as e:
@@ -121,6 +127,58 @@ def add_cv():
             "error": "An error occurred",
             "details": str(e)
         }), 500
+
+@app.route('/search_cv', methods=['POST'])
+def search_cv():
+    """
+    Endpoint to search in CVs using XPath query
+    """
+    try:
+        # Get the XPath query from the request
+        data = request.get_json()
+        xpath_query = data.get('xpath_query')
+        if not xpath_query:
+            return jsonify({"error": "No XPath query provided"}), 400
+
+        # Retrieve all CVs from the database
+        cvs = CV.query.all()
+        if not cvs:
+            return jsonify({"error": "No CVs found in the database"}), 404
+
+        # Perform XPath search on each CV
+        results = []
+        for cv in cvs:
+            root = etree.fromstring(cv.xml_data.encode('utf-8'))  # Ensure UTF-8 bytes input
+            matches = root.xpath(xpath_query)
+            if matches:
+                # Collect the results
+                match_results = [
+                    etree.tostring(match, pretty_print=True, encoding="unicode")
+                    if isinstance(match, etree._Element)
+                    else str(match)
+                    for match in matches
+                ]
+                results.append({
+                    "cv_id": cv.id,
+                    "matches": match_results
+                })
+
+        if not results:
+            return jsonify({"message": "No matches found for the given XPath query"}), 200
+
+        return jsonify({
+            "message": "Matches found",
+            "results": results
+        }), 200
+
+    except etree.XPathSyntaxError as e:
+        return jsonify({"error": "Invalid XPath query", "details": str(e)}), 400
+    except Exception as e:
+        return jsonify({
+            "error": "An error occurred",
+            "details": str(e)
+        }), 500
+
 
 @app.route('/get_cv/<int:cv_id>', methods=['GET'])
 def get_cv(cv_id):
