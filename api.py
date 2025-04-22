@@ -177,6 +177,53 @@ def edit_cv(cv_id):
             "error": "An error occurred",
             "details": str(e)
         }), 500
+@app.route('/delete_element/<int:cv_id>', methods=['DELETE'])
+def delete_element(cv_id):
+    """
+    Endpoint to delete specific elements in a CV using an XPath query
+    """
+    try:
+        # Retrieve the CV from the database
+        cv = CV.query.get_or_404(cv_id)
+
+        # Parse the XML data
+        root = etree.fromstring(cv.xml_data.encode('utf-8'))
+
+        # Get the XPath query from the request
+        data = request.get_json()
+        xpath_query = data.get('xpath_query')
+
+        if not xpath_query:
+            return jsonify({"error": "XPath query is required"}), 400
+
+        # Find elements matching the XPath query
+        elements = root.xpath(xpath_query)
+        if not elements:
+            return jsonify({"error": "No matching elements found for the given XPath query"}), 404
+
+        # Remove the matching elements
+        for element in elements:
+            parent = element.getparent()
+            if parent is not None:
+                parent.remove(element)
+
+        # Save the updated XML back to the database
+        updated_xml = etree.tostring(root, pretty_print=True, encoding="UTF-8", xml_declaration=True).decode('utf-8')
+        cv.xml_data = updated_xml
+        db.session.commit()
+
+        return jsonify({
+            "message": "Element(s) deleted successfully",
+            "updated_xml": updated_xml
+        }), 200
+
+    except etree.XPathSyntaxError as e:
+        return jsonify({"error": "Invalid XPath query", "details": str(e)}), 400
+    except Exception as e:
+        return jsonify({
+            "error": "An error occurred",
+            "details": str(e)
+        }), 500
 
 @app.route('/search_cv', methods=['POST'])
 def search_cv():
