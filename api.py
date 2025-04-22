@@ -128,6 +128,56 @@ def add_cv_combined():
             "details": str(e)
         }), 500
 
+@app.route('/edit_cv/<int:cv_id>', methods=['POST'])
+def edit_cv(cv_id):
+    """
+    Endpoint to edit a CV using XPath query
+    """
+    try:
+        # Retrieve the CV from the database
+        cv = CV.query.get_or_404(cv_id)
+
+        # Parse the XML data
+        root = etree.fromstring(cv.xml_data.encode('utf-8'))
+
+        # Get the XPath query and update data from the request
+        data = request.get_json()
+        xpath_query = data.get('xpath_query')
+        new_value = data.get('new_value')
+
+        if not xpath_query or new_value is None:
+            return jsonify({"error": "Both 'xpath_query' and 'new_value' are required"}), 400
+
+        # Find elements matching the XPath query
+        elements = root.xpath(xpath_query)
+        if not elements:
+            return jsonify({"error": "No matching elements found for the given XPath query"}), 404
+
+        # Update the elements
+        for element in elements:
+            if isinstance(element, etree._Element):
+                element.text = new_value
+            else:
+                return jsonify({"error": "Cannot update non-element nodes"}), 400
+
+        # Save the updated XML back to the database
+        updated_xml = etree.tostring(root, pretty_print=True, encoding="UTF-8", xml_declaration=True).decode('utf-8')
+        cv.xml_data = updated_xml
+        db.session.commit()
+
+        return jsonify({
+            "message": "CV updated successfully",
+            "updated_xml": updated_xml
+        }), 200
+
+    except etree.XPathSyntaxError as e:
+        return jsonify({"error": "Invalid XPath query", "details": str(e)}), 400
+    except Exception as e:
+        return jsonify({
+            "error": "An error occurred",
+            "details": str(e)
+        }), 500
+
 @app.route('/search_cv', methods=['POST'])
 def search_cv():
     """
