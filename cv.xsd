@@ -19,7 +19,7 @@
         <xs:element ref="loisirs"/>
         <xs:element ref="references"/>
       </xs:sequence>
-      <xs:attribute name="id" use="required" type="xs:integer"/>
+<xs:attribute name="id" use="required" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="entete">
@@ -106,7 +106,7 @@
       <xs:attribute name="a" use="required" type="xs:NMTOKEN"/>
       <xs:attribute name="de" use="required" type="xs:NMTOKEN"/>
       <xs:attribute name="etablissement" use="required"/>
-      <xs:attribute name="id" use="required" type="xs:NCName"/>
+      <xs:attribute name="id" use="required" type="xs:string"/>
       <xs:attribute name="poste" use="required"/>
     </xs:complexType>
   </xs:element>
